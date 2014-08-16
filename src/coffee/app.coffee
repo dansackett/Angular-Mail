@@ -140,50 +140,6 @@ angular.module('angularMail').directive 'mailbox', MailBox
 
 # -----------------------------------------------------------------------------
 
-# Filters Directive
-### @ngInject ###
-Filters = () ->
-    directive = {
-        restrict: 'E'
-        scope: {
-            mode: '='
-            changeMode: '='
-            filters: '='
-            applyFilter: '='
-            typeFilter: '@'
-        }
-        link: (scope, elem, attrs) ->
-        templateUrl: 'templates/filters.html'
-    }
-
-    return directive
-
-angular.module('angularMail').directive 'filters', Filters
-
-# -----------------------------------------------------------------------------
-
-# MessageList Directive
-### @ngInject ###
-MessageList = () ->
-    directive = {
-        restrict: 'E'
-        scope: {
-            mode: '='
-            messages: '='
-            showEmail: '='
-            search: '@'
-            typeFilter: '@'
-        }
-        link: (scope, elem, attrs) ->
-        templateUrl: 'templates/message_list.html'
-    }
-
-    return directive
-
-angular.module('angularMail').directive 'messageList', MessageList
-
-# -----------------------------------------------------------------------------
-
 # ViewEmail Directive
 ### @ngInject ###
 ViewEmail = () ->

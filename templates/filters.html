@@ -1,9 +1,0 @@
-<div class="col-md-2" ng-show="mode == 'view'">
-    <button class="btn btn-primary btn-block" ng-click="changeMode('compose')">Compose</button>
-    <hr />
-    <div class="list-group">
-        <a href="javascript:;" ng-click="applyFilter(filter.name)" ng-repeat="filter in filters" ng-class="{'list-group-item active': filter.name == typeFilter, 'list-group-item': filter.name !== typeFilter}">
-            {{ filter.text }}
-        </a>
-    </div>
-</div>

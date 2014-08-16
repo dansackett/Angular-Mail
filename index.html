@@ -21,10 +21,10 @@
             <div class="page-header">
                 <h1>Angular-Mail <small>Your mail the AngularJS way</small></h1>
             </div>
-            <search-bar view="main.view"></search-bar>
-            <mailbox view="main.view" change-view="main.changeView"></mailbox>
-            <view-email view="main.view" change-view="main.changeView"></view-email>
-            <send-form view="main.view" change-view="main.changeView"></send-form>
+            <search-bar mode="main.mode" search="main.searchText"></search-bar>
+            <mailbox apply-filter="main.applyFilter" filters="main.filters" type-filter="{{ main.filter }}" search="{{ main.searchText }}" messages="main.messages" mode="main.mode" change-mode="main.changeMode"></mailbox>
+            <view-email mode="main.mode" change-mode="main.changeMode"></view-email>
+            <send-form mode="main.mode" change-mode="main.changeMode"></send-form>
         </div>
 
     <!-- JS -->

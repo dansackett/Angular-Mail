@@ -6,12 +6,24 @@ angular.module 'angularMail', []
 
 # @ngInject
 # MainCtrl Controller
-MainCtrl = () ->
+MainCtrl = (MessageService, FilterService) ->
     vm = @
 
-    vm.view = 'view'
-    vm.changeView = (view = 'view') ->
-        vm.view = view
+    vm.mode = 'view'
+    vm.searchText = ''
+    vm.filter = 'inbox'
+    vm.filters = FilterService.getFilters()
+
+    vm.getMessages = () ->
+        return MessageService.getMessages()
+
+    vm.messages = vm.getMessages()
+
+    vm.applyFilter = (filter = 'inbox') ->
+        vm.filter = FilterService.applyFilter(filter)
+
+    vm.changeMode = (mode = 'view') ->
+        vm.mode = mode
 
     return
 
@@ -20,18 +32,79 @@ angular.module('angularMail').controller 'MainCtrl', MainCtrl
 # -----------------------------------------------------------------------------
 
 # @ngInject
+# MessageService Factory
+MessageService = () ->
+    MessageService = {
+        getMessages: () ->
+            return messages
+    }
+
+    return MessageService
+
+angular.module('angularMail').factory 'MessageService', MessageService
+
+# -----------------------------------------------------------------------------
+
+# @ngInject
+# FilterService Factory
+FilterService = () ->
+    FilterService = {
+        getFilters: () -> filters
+        applyFilter: (filter) ->
+            return filter
+    }
+
+    return FilterService
+
+angular.module('angularMail').factory 'FilterService', FilterService
+
+# -----------------------------------------------------------------------------
+
+# @ngInject
+# TypeFilter Filter
+TypeFilter = () ->
+    (items, filter) ->
+        if filter == 'all'
+            return (item for item in items when not item.is_sent || not item.is_draft)
+
+        filtered = []
+
+        angular.forEach items, (item, key) ->
+            if filter == 'inbox' && item.is_in_inbox
+                filtered.push item
+            else if filter == 'starred' && item.is_starred
+                filtered.push item
+            else if filter == 'spam' && item.is_spam
+                filtered.push item
+            else if filter == 'sent' && item.is_sent
+                filtered.push item
+            else if filter == 'draft' && item.is_draft
+                filtered.push item
+            else if filter == 'archived' && item.is_archived
+                filtered.push item
+            else if filter == 'deleted' && item.is_deleted
+                filtered.push item
+
+        filtered
+
+angular.module('angularMail').filter 'TypeFilter', TypeFilter
+
+# -----------------------------------------------------------------------------
+
+# @ngInject
 # SearchBar Directive
 SearchBar = () ->
-    search_bar = {
+    directive = {
         restrict: 'E'
         scope: {
-            view: '='
+            mode: '='
+            search: '='
         }
         link: (scope, elem, attrs) ->
         templateUrl: 'templates/search_bar.html'
     }
 
-    return search_bar
+    return directive
 
 angular.module('angularMail').directive 'searchBar', SearchBar
 
@@ -40,17 +113,22 @@ angular.module('angularMail').directive 'searchBar', SearchBar
 # @ngInject
 # MailBox Directive
 MailBox = () ->
-    mailbox = {
+    directive = {
         restrict: 'E'
         scope: {
-            view: '='
-            changeView: '='
+            mode: '='
+            changeMode: '='
+            messages: '='
+            filters: '='
+            search: '@'
+            applyFilter: '='
+            typeFilter: '@'
         }
         link: (scope, elem, attrs) ->
         templateUrl: 'templates/mailbox.html'
     }
 
-    return mailbox
+    return directive
 
 angular.module('angularMail').directive 'mailbox', MailBox
 
@@ -59,17 +137,20 @@ angular.module('angularMail').directive 'mailbox', MailBox
 # @ngInject
 # Filters Directive
 Filters = () ->
-    filters = {
+    directive = {
         restrict: 'E'
         scope: {
-            view: '='
-            changeView: '='
+            mode: '='
+            changeMode: '='
+            filters: '='
+            applyFilter: '='
+            typeFilter: '@'
         }
         link: (scope, elem, attrs) ->
         templateUrl: 'templates/filters.html'
     }
 
-    return filters
+    return directive
 
 angular.module('angularMail').directive 'filters', Filters
 
@@ -78,16 +159,19 @@ angular.module('angularMail').directive 'filters', Filters
 # @ngInject
 # MessageList Directive
 MessageList = () ->
-    message_list = {
+    directive = {
         restrict: 'E'
         scope: {
-            view: '='
+            mode: '='
+            messages: '='
+            search: '@'
+            typeFilter: '@'
         }
         link: (scope, elem, attrs) ->
         templateUrl: 'templates/message_list.html'
     }
 
-    return message_list
+    return directive
 
 angular.module('angularMail').directive 'messageList', MessageList
 
@@ -96,17 +180,17 @@ angular.module('angularMail').directive 'messageList', MessageList
 # @ngInject
 # ViewEmail Directive
 ViewEmail = () ->
-    view_email = {
+    directive = {
         restrict: 'E'
         scope: {
-            view: '='
-            changeView: '='
+            mode: '='
+            changeMode: '='
         }
         link: (scope, elem, attrs) ->
         templateUrl: 'templates/view_email.html'
     }
 
-    return view_email
+    return directive
 
 angular.module('angularMail').directive 'viewEmail', ViewEmail
 
@@ -115,16 +199,16 @@ angular.module('angularMail').directive 'viewEmail', ViewEmail
 # @ngInject
 # SendForm Directive
 SendForm = () ->
-    send_form = {
+    directive = {
         restrict: 'E'
         scope: {
-            view: '='
-            changeView: '='
+            mode: '='
+            changeMode: '='
         }
         link: (scope, elem, attrs) ->
         templateUrl: 'templates/send_form.html'
     }
 
-    return send_form
+    return directive
 
 angular.module('angularMail').directive 'sendForm', SendForm

@@ -1,4 +1,4 @@
-<div class="col-md-10" ng-show="view == 'view'">
+<div class="col-md-10" ng-show="mode == 'view'">
     <div class="btn-group">
         <button type="button" class="btn btn-default">Select All</button>
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -16,33 +16,13 @@
     <hr />
     <table class="table table-hover">
         <tbody>
-            <tr>
-                <td><input type="checkbox" value=""></td>
-                <td><i class="fa fa-star-o"></i></td>
-                <td>Daniel Sackett</td>
-                <td>Hello this is an email!</td>
-                <td>August 15, 2014</td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" value=""></td>
-                <td><i class="fa fa-star-o"></i></td>
-                <td>Jesse Boyer</td>
-                <td>Did you see what Matt did this week?</td>
-                <td>August 15, 2014</td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" value=""></td>
-                <td><i class="fa fa-star-o"></i></td>
-                <td>Matthieu Fauveau</td>
-                <td>My new mechanical keyboard is the best!</td>
-                <td>August 15, 2014</td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" value=""></td>
-                <td><i class="fa fa-star-o"></i></td>
-                <td>Cort Lyons</td>
-                <td>AngularJS is SO cool!</td>
-                <td>August 15, 2014</td>
+            <tr ng-repeat="message in messages | filter : { subject: search } | TypeFilter:typeFilter" ng-class="{unread: !message.is_read}">
+                <td ng-if="message.is_selected"><input checked type="checkbox"></td>
+                <td ng-if="!message.is_selected"><input type="checkbox"></td>
+                <td><i ng-class="{'fa fa-star-o': !message.is_starred, 'fa fa-star': message.is_starred}"></i></td>
+                <td ng-bind="message.from"></td>
+                <td ng-bind="message.subject"></td>
+                <td ng-bind="message.date"></td>
             </tr>
         </tbody>
     </table>

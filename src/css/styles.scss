@@ -12,3 +12,7 @@
 .table>tbody>tr:first-child>td {
     border-top: none;
 }
+
+.table tr.unread {
+    font-weight: 700;
+}

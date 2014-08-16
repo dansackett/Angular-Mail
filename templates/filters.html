@@ -1,24 +1,9 @@
-<div class="col-md-2" ng-show="view == 'view'">
-    <button class="btn btn-primary btn-block" ng-click="changeView('compose')">Compose</button>
+<div class="col-md-2" ng-show="mode == 'view'">
+    <button class="btn btn-primary btn-block" ng-click="changeMode('compose')">Compose</button>
     <hr />
     <div class="list-group">
-        <a href="#" class="list-group-item active">
-            <span class="badge">14</span> Inbox
-        </a>
-        <a href="#" class="list-group-item">
-            <span class="badge">5</span> Starred
-        </a>
-        <a href="#" class="list-group-item">
-            <span class="badge">3</span> Sent
-        </a>
-        <a href="#" class="list-group-item">
-            <span class="badge">100</span> Archived
-        </a>
-        <a href="#" class="list-group-item">
-            <span class="badge">60</span> Spam
-        </a>
-        <a href="#" class="list-group-item">
-            <span class="badge">70</span> Deleted
+        <a href="javascript:;" ng-click="applyFilter(filter.name)" ng-repeat="filter in filters" ng-class="{'list-group-item active': filter.name == typeFilter, 'list-group-item': filter.name !== typeFilter}">
+            {{ filter.text }}
         </a>
     </div>
 </div>

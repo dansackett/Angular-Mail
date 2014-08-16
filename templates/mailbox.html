@@ -1,4 +1,4 @@
 <div class="row">
-    <filters view="view" change-view="changeView"></filters>
-    <message-list view="view"></message-list>
+    <filters apply-filter="applyFilter" mode="mode" filters="filters" type-filter="{{ typeFilter }}" change-mode="changeMode"></filters>
+    <message-list search="{{ search }}" type-filter="{{ typeFilter }}" mode="mode" messages="messages"></message-list>
 </div>

@@ -16,7 +16,7 @@
     <hr />
     <table class="table table-hover">
         <tbody>
-            <tr ng-repeat="message in messages | filter : { subject: search } | TypeFilter:typeFilter" ng-class="{unread: !message.is_read}">
+            <tr ng-click="showEmail(message)" ng-repeat="message in messages | filter : { subject: search } | TypeFilter:typeFilter" ng-class="{unread: !message.is_read}">
                 <td ng-if="message.is_selected"><input checked type="checkbox"></td>
                 <td ng-if="!message.is_selected"><input type="checkbox"></td>
                 <td><i ng-class="{'fa fa-star-o': !message.is_starred, 'fa fa-star': message.is_starred}"></i></td>

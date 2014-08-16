@@ -22,8 +22,8 @@
                 <h1>Angular-Mail <small>Your mail the AngularJS way</small></h1>
             </div>
             <search-bar mode="main.mode" search="main.searchText"></search-bar>
-            <mailbox apply-filter="main.applyFilter" filters="main.filters" type-filter="{{ main.filter }}" search="{{ main.searchText }}" messages="main.messages" mode="main.mode" change-mode="main.changeMode"></mailbox>
-            <view-email mode="main.mode" change-mode="main.changeMode"></view-email>
+            <mailbox show-email="main.showEmail" apply-filter="main.applyFilter" filters="main.filters" type-filter="{{ main.filter }}" search="{{ main.searchText }}" messages="main.messages" mode="main.mode" change-mode="main.changeMode"></mailbox>
+            <view-email current-email="main.currentEmail" mode="main.mode" change-mode="main.changeMode"></view-email>
             <send-form mode="main.mode" change-mode="main.changeMode"></send-form>
         </div>
 

@@ -11,6 +11,7 @@ MainCtrl = (MessageService, FilterService) ->
 
     vm.mode = 'view'
     vm.searchText = ''
+    vm.currentEmail = null
     vm.filter = 'inbox'
     vm.filters = FilterService.getFilters()
 
@@ -24,6 +25,10 @@ MainCtrl = (MessageService, FilterService) ->
 
     vm.changeMode = (mode = 'view') ->
         vm.mode = mode
+
+    vm.showEmail = (email) ->
+        vm.mode = 'read'
+        vm.currentEmail = email
 
     return
 
@@ -122,6 +127,7 @@ MailBox = () ->
             filters: '='
             search: '@'
             applyFilter: '='
+            showEmail: '='
             typeFilter: '@'
         }
         link: (scope, elem, attrs) ->
@@ -164,6 +170,7 @@ MessageList = () ->
         scope: {
             mode: '='
             messages: '='
+            showEmail: '='
             search: '@'
             typeFilter: '@'
         }
@@ -185,6 +192,7 @@ ViewEmail = () ->
         scope: {
             mode: '='
             changeMode: '='
+            currentEmail: '='
         }
         link: (scope, elem, attrs) ->
         templateUrl: 'templates/view_email.html'

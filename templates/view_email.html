@@ -1,10 +1,9 @@
 <div class="col-md-12" ng-show="mode == 'read'">
-    <h1>This is the subject line</h1>
+    <h1 ng-bind="currentEmail.subject"></h1>
     <hr />
     From: <strong>Dan Sackett</strong> (me@angular-mail.com)
     <hr />
-    <p>Street art plaid artisan, 90's fashion axe messenger bag slow-carb Odd Future bicycle rights put a bird on it. VHS asymmetrical next level, aesthetic chambray food truck pug slow-carb Blue Bottle Kickstarter. Ethical Helvetica gastropub keytar. Slow-carb cred ethnic readymade narwhal synth. Sriracha jean shorts gentrify, bitters art party fashion axe flexitarian quinoa Pitchfork normcore Kickstarter synth kitsch. Mixtape keffiyeh VHS crucifix, readymade gastropub cardigan gluten-free art party narwhal. Swag umami Williamsburg, hoodie four loko photo booth street art Neutra ethical Pinterest master cleanse Banksy banh mi skateboard.</p>
-    <p>Quinoa hashtag brunch, ethical banjo VHS roof party retro. Asymmetrical jean shorts squid banjo meggings Vice. Vinyl messenger bag blog pop-up pour-over Tumblr. American Apparel polaroid actually post-ironic drinking vinegar, Shoreditch selvage trust fund Kickstarter forage bespoke McSweeney's fap pour-over street art. Gentrify gluten-free chambray banh mi tofu, Odd Future pop-up Neutra High Life Williamsburg deep v. American Apparel kale chips Godard mixtape. Vice biodiesel artisan jean shorts, 8-bit master cleanse drinking vinegar gluten-free before they sold out pour-over.</p>
+    <p ng-bind="currentEmail.message"></p>
     <hr />
     <button ng-click="changeMode()" class="btn btn-primary">Back to Inbox</button>
 </div>

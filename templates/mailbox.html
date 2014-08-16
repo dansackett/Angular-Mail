@@ -26,13 +26,16 @@
         <hr />
         <table class="table table-hover">
             <tbody>
-                <tr ng-click="showEmail(message)" ng-repeat="message in messages | SearchFilter:search | TypeFilter:typeFilter" ng-class="{unread: !message.is_read}">
+                <tr ng-click="showEmail(message)" ng-repeat="message in filteredMessages = (messages | SearchFilter:search | TypeFilter:typeFilter)" ng-class="{unread: !message.is_read}">
                     <td ng-if="message.is_selected"><input checked type="checkbox"></td>
                     <td ng-if="!message.is_selected"><input type="checkbox"></td>
                     <td><i ng-class="{'fa fa-star-o': !message.is_starred, 'fa fa-star': message.is_starred}"></i></td>
                     <td ng-bind="message.from"></td>
                     <td ng-bind="message.subject"></td>
                     <td ng-bind="message.date"></td>
+                </tr>
+                <tr ng-hide="filteredMessages.length">
+                    <td>No messages found.</td>
                 </tr>
             </tbody>
         </table>

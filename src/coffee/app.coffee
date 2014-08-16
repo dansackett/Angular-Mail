@@ -4,8 +4,8 @@ angular.module 'angularMail', []
 
 # -----------------------------------------------------------------------------
 
-# @ngInject
 # MainCtrl Controller
+### @ngInject ###
 MainCtrl = (MessageService, FilterService) ->
     vm = @
 
@@ -36,8 +36,8 @@ angular.module('angularMail').controller 'MainCtrl', MainCtrl
 
 # -----------------------------------------------------------------------------
 
-# @ngInject
 # MessageService Factory
+### @ngInject ###
 MessageService = () ->
     MessageService = {
         getMessages: () ->
@@ -50,8 +50,8 @@ angular.module('angularMail').factory 'MessageService', MessageService
 
 # -----------------------------------------------------------------------------
 
-# @ngInject
 # FilterService Factory
+### @ngInject ###
 FilterService = () ->
     FilterService = {
         getFilters: () -> filters
@@ -65,8 +65,8 @@ angular.module('angularMail').factory 'FilterService', FilterService
 
 # -----------------------------------------------------------------------------
 
-# @ngInject
 # TypeFilter Filter
+### @ngInject ###
 TypeFilter = () ->
     (items, filter) ->
         if filter == 'all'
@@ -96,8 +96,8 @@ angular.module('angularMail').filter 'TypeFilter', TypeFilter
 
 # -----------------------------------------------------------------------------
 
-# @ngInject
 # SearchBar Directive
+### @ngInject ###
 SearchBar = () ->
     directive = {
         restrict: 'E'
@@ -115,8 +115,8 @@ angular.module('angularMail').directive 'searchBar', SearchBar
 
 # -----------------------------------------------------------------------------
 
-# @ngInject
 # MailBox Directive
+### @ngInject ###
 MailBox = () ->
     directive = {
         restrict: 'E'
@@ -140,8 +140,8 @@ angular.module('angularMail').directive 'mailbox', MailBox
 
 # -----------------------------------------------------------------------------
 
-# @ngInject
 # Filters Directive
+### @ngInject ###
 Filters = () ->
     directive = {
         restrict: 'E'
@@ -162,8 +162,8 @@ angular.module('angularMail').directive 'filters', Filters
 
 # -----------------------------------------------------------------------------
 
-# @ngInject
 # MessageList Directive
+### @ngInject ###
 MessageList = () ->
     directive = {
         restrict: 'E'
@@ -184,8 +184,8 @@ angular.module('angularMail').directive 'messageList', MessageList
 
 # -----------------------------------------------------------------------------
 
-# @ngInject
 # ViewEmail Directive
+### @ngInject ###
 ViewEmail = () ->
     directive = {
         restrict: 'E'
@@ -204,8 +204,8 @@ angular.module('angularMail').directive 'viewEmail', ViewEmail
 
 # -----------------------------------------------------------------------------
 
-# @ngInject
 # SendForm Directive
+### @ngInject ###
 SendForm = () ->
     directive = {
         restrict: 'E'

@@ -5,3 +5,6 @@ received = []
 
 # Sent Emails
 sent = []
+
+# Filters
+filters = []

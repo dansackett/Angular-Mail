@@ -1,0 +1,28 @@
+dest:
+    js:     public/js
+    css:    public/css
+    fonts:  public/fonts
+src:
+    sass:
+        - src/css/*.scss
+        - src/css/**/*.scss
+    coffee:
+        - src/coffee/*.coffee
+third_party:
+    js:
+        - public/third-party/jquery/dist/jquery.min.js
+        - public/third-party/bootstrap/dist/js/bootstrap.min.js
+        - public/third-party/angular/angular.min.js
+    css:
+        - public/third-party/bootstrap/dist/css/bootstrap.min.css
+        - public/third-party/fontawesome/css/font-awesome.min.css
+    fonts:
+        - public/third-party/bootstrap/dist/fonts/glyphicons-halflings-regular.eot
+        - public/third-party/bootstrap/dist/fonts/glyphicons-halflings-regular.svg
+        - public/third-party/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf
+        - public/third-party/bootstrap/dist/fonts/glyphicons-halflings-regular.woff
+        - public/third-party/fontawesome/fonts/FontAwesome.otf
+        - public/third-party/fontawesome/fonts/fontawesome-webfont.eot
+        - public/third-party/fontawesome/fonts/fontawesome-webfont.svg
+        - public/third-party/fontawesome/fonts/fontawesome-webfont.ttf
+        - public/third-party/fontawesome/fonts/fontawesome-webfont.woff

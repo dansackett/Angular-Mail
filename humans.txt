@@ -1,0 +1,10 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Dan Sackett -- Core Contributor -- @dansackett
+
+# TECHNOLOGY COLOPHON
+
+    CSS3, HTML5, AngularJS, SASS, CoffeeScript, Bootstrap, Gulp

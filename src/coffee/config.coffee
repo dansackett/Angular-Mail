@@ -6,7 +6,7 @@ messages = [
         from: 'Dan Sackett'
         subject: 'Hello, this is an email!'
         message: 'This is the message'
-        date: 'Auguest 15, 2014'
+        date: 'August 15, 2014'
         is_in_inbox: true
         is_read: true
         is_sent: false
@@ -21,7 +21,7 @@ messages = [
         from: 'Tony Hawk'
         subject: 'Did you see that sweet jump I did?'
         message: 'It was the best jump in the world'
-        date: 'Auguest 4, 2014'
+        date: 'August 4, 2014'
         is_in_inbox: true
         is_read: false
         is_sent: false
@@ -36,7 +36,7 @@ messages = [
         from: 'Bill Simmons'
         subject: 'New Mailbag column is finally up'
         message: 'Just finished the new mailbag column. Go and check it out!'
-        date: 'Auguest 1, 2014'
+        date: 'August 1, 2014'
         is_in_inbox: true
         is_read: false
         is_sent: false

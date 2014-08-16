@@ -1,7 +1,7 @@
 <div class="col-md-12" ng-show="mode == 'read'">
     <h1 ng-bind="currentEmail.subject"></h1>
     <hr />
-    From: <strong>Dan Sackett</strong> (me@angular-mail.com)
+    From: <strong>{{ currentEmail.from }}</strong> ({{ currentEmail.from_email }})
     <hr />
     <p ng-bind="currentEmail.message"></p>
     <hr />

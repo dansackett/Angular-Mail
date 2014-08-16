@@ -4,6 +4,7 @@
 messages = [
     {
         from: 'Dan Sackett'
+        from_email: 'danesackett@gmail.com'
         subject: 'Hello, this is an email!'
         message: 'This is the message'
         date: 'August 15, 2014'
@@ -19,6 +20,7 @@ messages = [
     }
     {
         from: 'Tony Hawk'
+        from_email: 'tonyhawk@gmail.com'
         subject: 'Did you see that sweet jump I did?'
         message: 'It was the best jump in the world'
         date: 'August 4, 2014'
@@ -34,6 +36,7 @@ messages = [
     }
     {
         from: 'Bill Simmons'
+        from_email: 'billsimmons@gmail.com'
         subject: 'New Mailbag column is finally up'
         message: 'Just finished the new mailbag column. Go and check it out!'
         date: 'August 1, 2014'
@@ -49,6 +52,7 @@ messages = [
     }
     {
         from: 'Dikembe Mutumbo'
+        from_email: 'mountmutumbo@gmail.com'
         subject: 'No No No'
         message: 'You\'ll never dunk on me!'
         date: 'July 20, 2014'
@@ -64,6 +68,7 @@ messages = [
     }
     {
         from: 'Jimmy Buffet'
+        from_email: 'margaritaville@gmail.com'
         subject: 'Come on down to margaritaville'
         message: 'We\'ll be waiting for you'
         date: 'July 13, 2014'
@@ -79,6 +84,7 @@ messages = [
     }
     {
         from: 'Father Time'
+        from_email: 'fathertime@gmail.com'
         subject: 'You\'re getting old'
         message: 'We\'re ready for you'
         date: 'July 13, 2014'
@@ -94,6 +100,7 @@ messages = [
     }
     {
         from: 'Junk'
+        from_email: 'no-reply@gmail.com'
         subject: 'Junk Mail'
         message: 'I\'m garbage'
         date: 'July 3, 2014'
@@ -109,6 +116,7 @@ messages = [
     }
     {
         from: 'Dan Sackett'
+        from_email: 'danesackett@gmail.com'
         subject: 'Great Scott!'
         message: 'You sent this message!'
         date: 'July 3, 2014'

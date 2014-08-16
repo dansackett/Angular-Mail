@@ -8,3 +8,7 @@
 
 @import "inc/vars",
         "inc/normalize";
+
+.table>tbody>tr:first-child>td {
+    border-top: none;
+}

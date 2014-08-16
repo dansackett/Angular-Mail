@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="Dan Sackett">
-        <link rel="shortcut icon" href="public/favicon.ico">
+        <link rel="shortcut icon" href="favicon.ico">
         <link type="text/plain" rel="author" href="humans.txt" />
 
         <title>Angular-Mail</title>
@@ -16,6 +16,98 @@
         <link href="public/css/styles.css" rel="stylesheet" />
     </head>
     <body>
+
+        <div class="container">
+            <div class="page-header">
+                <h1>Angular-Mail <small>Your mail the AngularJS way</small></h1>
+            </div>
+            <div class="row">
+                <form class="form col-md-12" role="form">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-search"></i> Search</div>
+                            <input class="form-control" type="text" placeholder="Search Emails">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-2">
+                    <button class="btn btn-primary btn-block">Compose</button>
+                    <hr />
+                    <div class="list-group">
+                        <a href="#" class="list-group-item active">
+                            <span class="badge">14</span> Inbox
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <span class="badge">5</span> Starred
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <span class="badge">3</span> Sent
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <span class="badge">100</span> Archived
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <span class="badge">60</span> Spam
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <span class="badge">70</span> Deleted
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default">Select All</button>
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Read</a></li>
+                            <li><a href="#">Unread</a></li>
+                            <li><a href="#">Starred</a></li>
+                            <li><a href="#">Unstarred</a></li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-primary">Mark All As Read</button>
+                    <hr />
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <td><input type="checkbox" value=""></td>
+                                <td><i class="fa fa-star-o"></i></td>
+                                <td>Daniel Sackett</td>
+                                <td>Hello this is an email!</td>
+                                <td>August 15, 2014</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" value=""></td>
+                                <td><i class="fa fa-star-o"></i></td>
+                                <td>Jesse Boyer</td>
+                                <td>Did you see what Matt did this week?</td>
+                                <td>August 15, 2014</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" value=""></td>
+                                <td><i class="fa fa-star-o"></i></td>
+                                <td>Matthieu Fauveau</td>
+                                <td>My new mechanical keyboard is the best!</td>
+                                <td>August 15, 2014</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" value=""></td>
+                                <td><i class="fa fa-star-o"></i></td>
+                                <td>Cort Lyons</td>
+                                <td>AngularJS is SO cool!</td>
+                                <td>August 15, 2014</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
     <!-- JS -->
     <script src="public/js/dependencies.min.js"></script>

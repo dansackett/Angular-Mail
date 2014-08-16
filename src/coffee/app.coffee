@@ -9,9 +9,11 @@ angular.module 'angularMail', []
 MainCtrl = () ->
     vm = @
 
-    vm.viewing_emails = true
-    vm.composing_email = false
-    vm.reading_email = false
+    vm.view = 'view'
+    vm.changeView = (view = 'view') ->
+        vm.view = view
+
+    return
 
 angular.module('angularMail').controller 'MainCtrl', MainCtrl
 
@@ -23,15 +25,13 @@ SearchBar = () ->
     search_bar = {
         restrict: 'E'
         scope: {
-            viewingEmails: '='
+            view: '='
         }
-        link: link
+        link: (scope, elem, attrs) ->
         templateUrl: 'templates/search_bar.html'
     }
 
     return search_bar
-
-    link = (scope, elem, attrs) ->
 
 angular.module('angularMail').directive 'searchBar', SearchBar
 
@@ -43,16 +43,14 @@ MailBox = () ->
     mailbox = {
         restrict: 'E'
         scope: {
-            viewingEmails: '='
-            readingEmail: '='
+            view: '='
+            changeView: '='
         }
-        link: link
+        link: (scope, elem, attrs) ->
         templateUrl: 'templates/mailbox.html'
     }
 
     return mailbox
-
-    link = (scope, elem, attrs) ->
 
 angular.module('angularMail').directive 'mailbox', MailBox
 
@@ -64,15 +62,14 @@ Filters = () ->
     filters = {
         restrict: 'E'
         scope: {
-            viewingEmails: '='
+            view: '='
+            changeView: '='
         }
-        link: link
+        link: (scope, elem, attrs) ->
         templateUrl: 'templates/filters.html'
     }
 
     return filters
-
-    link = (scope, elem, attrs) ->
 
 angular.module('angularMail').directive 'filters', Filters
 
@@ -84,15 +81,13 @@ MessageList = () ->
     message_list = {
         restrict: 'E'
         scope: {
-            viewingEmails: '='
+            view: '='
         }
-        link: link
+        link: (scope, elem, attrs) ->
         templateUrl: 'templates/message_list.html'
     }
 
     return message_list
-
-    link = (scope, elem, attrs) ->
 
 angular.module('angularMail').directive 'messageList', MessageList
 
@@ -104,15 +99,14 @@ ViewEmail = () ->
     view_email = {
         restrict: 'E'
         scope: {
-            readingEmail: '='
+            view: '='
+            changeView: '='
         }
-        link: link
+        link: (scope, elem, attrs) ->
         templateUrl: 'templates/view_email.html'
     }
 
     return view_email
-
-    link = (scope, elem, attrs) ->
 
 angular.module('angularMail').directive 'viewEmail', ViewEmail
 
@@ -124,14 +118,13 @@ SendForm = () ->
     send_form = {
         restrict: 'E'
         scope: {
-            composingEmail: '='
+            view: '='
+            changeView: '='
         }
-        link: link
+        link: (scope, elem, attrs) ->
         templateUrl: 'templates/send_form.html'
     }
 
     return send_form
-
-    link = (scope, elem, attrs) ->
 
 angular.module('angularMail').directive 'sendForm', SendForm

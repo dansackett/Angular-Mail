@@ -1,43 +1,58 @@
-<div class="row">
-    <div class="col-md-2" ng-show="mode == 'view'">
-        <button class="btn btn-primary btn-block" ng-click="changeMode('compose')">Compose</button>
-        <hr />
-        <div class="list-group">
-            <a href="javascript:;" ng-click="applyFilter(filter.name)" ng-repeat="filter in filters" ng-class="{'list-group-item active': filter.name == typeFilter, 'list-group-item': filter.name !== typeFilter}">
-                {{ filter.text }}
-            </a>
-        </div>
+<div ng-controller="MailboxCtrl as mailbox" ng-show="mailbox.mode == 'view'">
+    <div class="row">
+        <form class="form col-md-12" role="form">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-search"></i> Search</div>
+                    <input class="form-control" ng-model="mailbox.searchText" type="text" placeholder="Search Emails">
+                </div>
+            </div>
+        </form>
     </div>
-    <div class="col-md-10" ng-show="mode == 'view'">
-        <div class="btn-group">
-            <button type="button" class="btn btn-default">Select All</button>
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                <span class="caret"></span>
-                <span class="sr-only">Toggle Dropdown</span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Read</a></li>
-                <li><a href="#">Unread</a></li>
-                <li><a href="#">Starred</a></li>
-                <li><a href="#">Unstarred</a></li>
-            </ul>
+
+    <hr />
+
+    <div class="row">
+        <div class="col-md-2">
+            <button class="btn btn-primary btn-block" ng-click="mailbox.changeMode('compose')">Compose</button>
+            <hr />
+            <div class="list-group">
+                <a href="javascript:;" ng-click="mailbox.applyFilter(filter.name)" ng-repeat="filter in mailbox.filters" ng-class="{'list-group-item active': filter.name == mailbox.filter, 'list-group-item': filter.name !== mailbox.filter}">
+                    {{ filter.text }}
+                </a>
+            </div>
         </div>
-        <button class="btn btn-primary">Mark All As Read</button>
-        <hr />
-        <table class="table table-hover">
-            <tbody>
-                <tr ng-click="showEmail(message)" ng-repeat="message in filteredMessages = (messages | SearchFilter:search | TypeFilter:typeFilter)" ng-class="{unread: !message.is_read}">
-                    <td ng-if="message.is_selected"><input checked type="checkbox"></td>
-                    <td ng-if="!message.is_selected"><input type="checkbox"></td>
-                    <td><i ng-class="{'fa fa-star-o': !message.is_starred, 'fa fa-star': message.is_starred}"></i></td>
-                    <td ng-bind="message.from"></td>
-                    <td ng-bind="message.subject"></td>
-                    <td ng-bind="message.date"></td>
-                </tr>
-                <tr ng-hide="filteredMessages.length">
-                    <td>No messages found.</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="col-md-10">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default">Select All</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Read</a></li>
+                    <li><a href="#">Unread</a></li>
+                    <li><a href="#">Starred</a></li>
+                    <li><a href="#">Unstarred</a></li>
+                </ul>
+            </div>
+            <button class="btn btn-primary">Mark All As Read</button>
+            <hr />
+            <table class="table table-hover">
+                <tbody>
+                    <tr ng-click="mailbox.showEmail(message)" ng-repeat="message in filteredMessages = (mailbox.messages | SearchFilter:mailbox.searchText | TypeFilter:mailbox.filter)" ng-class="{unread: !message.is_read}">
+                        <td ng-if="message.is_selected"><input checked type="checkbox"></td>
+                        <td ng-if="!message.is_selected"><input type="checkbox"></td>
+                        <td><i ng-class="{'fa fa-star-o': !message.is_starred, 'fa fa-star': message.is_starred}"></i></td>
+                        <td ng-bind="message.from"></td>
+                        <td ng-bind="message.subject"></td>
+                        <td ng-bind="message.date"></td>
+                    </tr>
+                    <tr ng-hide="filteredMessages.length">
+                        <td>No messages found.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

@@ -4,40 +4,150 @@ angular.module 'angularMail', []
 
 # -----------------------------------------------------------------------------
 
-# MainCtrl Controller
-### @ngInject ###
-MainCtrl = (MessageService, FilterService) ->
+###
+# MailboxCtrl Controller
+# @ngInject
+###
+MailboxCtrl = ($scope, MessageService, FilterService, ModeService, EmailActionService) ->
     vm = @
 
-    vm.mode = 'view'
+    vm.mode = ModeService.getMode()
+    vm.changeMode = (mode) ->
+        ModeService.changeMode(mode)
+        vm.mode = ModeService.getMode(mode)
+        return
+
     vm.searchText = ''
-    vm.currentEmail = null
-    vm.filter = 'inbox'
+
+    vm.filter = FilterService.getCurrentFilter()
     vm.filters = FilterService.getFilters()
+    vm.applyFilter = (filter) ->
+        FilterService.applyFilter(filter)
+        return
 
-    vm.getMessages = () ->
-        return MessageService.getMessages()
+    vm.messages = MessageService.getMessages()
 
-    vm.messages = vm.getMessages()
-
-    vm.applyFilter = (filter = 'inbox') ->
-        vm.filter = FilterService.applyFilter(filter)
-
-    vm.changeMode = (mode = 'view') ->
-        vm.mode = mode
-
+    vm.currentEmail = EmailActionService.getCurrentEmail()
     vm.showEmail = (email) ->
+        EmailActionService.showEmail(email)
+        return
+
+    $scope.$on 'currentEmailUpdated', () ->
         vm.mode = 'read'
-        vm.currentEmail = email
+        vm.currentEmail = EmailActionService.getCurrentEmail()
+        return
+
+    $scope.$on 'modeUpdated', () ->
+        vm.mode = ModeService.getMode()
+        return
+
+    $scope.$on 'filterUpdated', () ->
+        vm.filter = FilterService.getCurrentFilter()
+        return
 
     return
 
-angular.module('angularMail').controller 'MainCtrl', MainCtrl
+angular.module('angularMail').controller 'MailboxCtrl', MailboxCtrl
 
 # -----------------------------------------------------------------------------
 
+###
+# ViewEmailCtrl Controller
+# @ngInject
+###
+ViewEmailCtrl = ($scope, ModeService, EmailActionService) ->
+    vm = @
+
+    vm.mode = ModeService.getMode()
+    vm.changeMode = (mode) ->
+        ModeService.changeMode(mode)
+        return
+
+    vm.currentEmail = EmailActionService.getCurrentEmail()
+
+    $scope.$on 'modeUpdated', () ->
+        vm.mode = ModeService.getMode()
+        return
+
+    $scope.$on 'currentEmailUpdated', () ->
+        vm.mode = 'read'
+        vm.currentEmail = EmailActionService.getCurrentEmail()
+        return
+
+    return
+
+angular.module('angularMail').controller 'ViewEmailCtrl', ViewEmailCtrl
+
+# -----------------------------------------------------------------------------
+
+###
+# SendEmailCtrl Controller
+# @ngInject
+###
+SendEmailCtrl = ($scope, ModeService) ->
+    vm = @
+
+    vm.mode = ModeService.getMode()
+    vm.changeMode = (mode) ->
+        ModeService.changeMode(mode)
+        return
+
+    $scope.$on 'modeUpdated', () ->
+        vm.mode = ModeService.getMode()
+        return
+
+    return
+
+angular.module('angularMail').controller 'SendEmailCtrl', SendEmailCtrl
+
+# -----------------------------------------------------------------------------
+
+###
+# EmailActionsService Factory
+# @ngInject
+###
+EmailActionService = ($rootScope) ->
+    EmailActionsService = {
+        currentEmail: null
+        showEmail: (email) ->
+            EmailActionService.currentEmail = email
+            $rootScope.$broadcast('currentEmailUpdated')
+            return
+        getCurrentEmail: () ->
+            return EmailActionService.currentEmail
+    }
+
+    return EmailActionsService
+
+angular.module('angularMail').factory 'EmailActionService', EmailActionService
+
+# -----------------------------------------------------------------------------
+
+###
+# ModeService Factory
+# @ngInject
+###
+ModeService = ($rootScope) ->
+    ModeService = {
+        mode: 'view'
+        getMode: () ->
+            return ModeService.mode
+        changeMode: (mode = 'view') ->
+            ModeService.mode = mode
+            $rootScope.$broadcast('modeUpdated')
+            return
+    }
+
+    return ModeService
+
+angular.module('angularMail').factory 'ModeService', ModeService
+
+# -----------------------------------------------------------------------------
+
+###
 # MessageService Factory
-### @ngInject ###
+# @ngInject
+###
 MessageService = () ->
     MessageService = {
         getMessages: () ->
@@ -50,13 +160,19 @@ angular.module('angularMail').factory 'MessageService', MessageService
 
 # -----------------------------------------------------------------------------
 
+###
 # FilterService Factory
-### @ngInject ###
-FilterService = () ->
+# @ngInject
+###
+FilterService = ($rootScope) ->
     FilterService = {
+        currentFilter: 'inbox'
         getFilters: () -> filters
+        getCurrentFilter: () -> FilterService.currentFilter
         applyFilter: (filter) ->
-            return filter
+            FilterService.currentFilter = filter
+            $rootScope.$broadcast('filterUpdated')
+            return FilterService.currentFilter
     }
 
     return FilterService
@@ -65,8 +181,10 @@ angular.module('angularMail').factory 'FilterService', FilterService
 
 # -----------------------------------------------------------------------------
 
+###
 # TypeFilter Filter
-### @ngInject ###
+# @ngInject
+###
 TypeFilter = () ->
     (items, filter) ->
         if filter == 'all'
@@ -96,8 +214,10 @@ angular.module('angularMail').filter 'TypeFilter', TypeFilter
 
 # -----------------------------------------------------------------------------
 
+###
 # SearchFilter Filter
-### @ngInject ###
+# @ngInject
+###
 SearchFilter = () ->
     (items, term) ->
         if term == ''
@@ -121,40 +241,14 @@ angular.module('angularMail').filter 'SearchFilter', SearchFilter
 
 # -----------------------------------------------------------------------------
 
-# SearchBar Directive
-### @ngInject ###
-SearchBar = () ->
-    directive = {
-        restrict: 'E'
-        scope: {
-            mode: '='
-            search: '='
-        }
-        link: (scope, elem, attrs) ->
-        templateUrl: 'templates/search_bar.html'
-    }
-
-    return directive
-
-angular.module('angularMail').directive 'searchBar', SearchBar
-
-# -----------------------------------------------------------------------------
-
+###
 # MailBox Directive
-### @ngInject ###
+# @ngInject
+###
 MailBox = () ->
     directive = {
         restrict: 'E'
-        scope: {
-            mode: '='
-            changeMode: '='
-            messages: '='
-            filters: '='
-            search: '@'
-            applyFilter: '='
-            showEmail: '='
-            typeFilter: '@'
-        }
+        scope: {}
         link: (scope, elem, attrs) ->
         templateUrl: 'templates/mailbox.html'
     }
@@ -165,16 +259,14 @@ angular.module('angularMail').directive 'mailbox', MailBox
 
 # -----------------------------------------------------------------------------
 
+###
 # ViewEmail Directive
-### @ngInject ###
+# @ngInject
+###
 ViewEmail = () ->
     directive = {
         restrict: 'E'
-        scope: {
-            mode: '='
-            changeMode: '='
-            currentEmail: '='
-        }
+        scope: {}
         link: (scope, elem, attrs) ->
         templateUrl: 'templates/view_email.html'
     }
@@ -185,15 +277,14 @@ angular.module('angularMail').directive 'viewEmail', ViewEmail
 
 # -----------------------------------------------------------------------------
 
+###
 # SendForm Directive
-### @ngInject ###
+# @ngInject
+###
 SendForm = () ->
     directive = {
         restrict: 'E'
-        scope: {
-            mode: '='
-            changeMode: '='
-        }
+        scope: {}
         link: (scope, elem, attrs) ->
         templateUrl: 'templates/send_form.html'
     }

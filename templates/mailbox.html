@@ -24,32 +24,40 @@
         </div>
         <div class="col-md-10">
             <div class="btn-group">
-                <button type="button" class="btn btn-default">Select All</button>
+                <button ng-hide="mailbox.emailsSelected" ng-click="mailbox.selectEmails('all', filteredEmails)" type="button" class="btn btn-default">Select All</button>
+                <button ng-show="mailbox.emailsSelected" ng-click="mailbox.unselectEmails()" type="button" class="btn btn-default">Unselect All</button>
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Read</a></li>
-                    <li><a href="#">Unread</a></li>
-                    <li><a href="#">Starred</a></li>
-                    <li><a href="#">Unstarred</a></li>
+                    <li><a ng-click="mailbox.selectEmails('read', filteredEmails)" href="#">Read</a></li>
+                    <li><a ng-click="mailbox.selectEmails('unread', filteredEmails)" href="#">Unread</a></li>
+                    <li><a ng-click="mailbox.selectEmails('starred', filteredEmails)" href="#">Starred</a></li>
+                    <li><a ng-click="mailbox.selectEmails('unstarred', filteredEmails)" href="#">Unstarred</a></li>
                 </ul>
             </div>
-            <button class="btn btn-primary">Mark All As Read</button>
+            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.moveToInbox(filteredEmails)" class="btn btn-default">Move To Inbox</button>
+            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.readSelected(filteredEmails)" class="btn btn-default">Mark As Read</button>
+            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.unreadSelected(filteredEmails)" class="btn btn-default">Mark As Unread</button>
+            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.starSelected(filteredEmails)" class="btn btn-default"><i class="fa fa-star"></i> Star</button>
+            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.unstarSelected(filteredEmails)" class="btn btn-default"><i class="fa fa-star-o"></i> Unstar</button>
+            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.spamSelected(filteredEmails)" class="btn btn-default">Mark As Spam</button>
+            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.archiveSelected(filteredEmails)" class="btn btn-warning"><i class="fa fa-archive"></i> Archive</button>
+            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.deleteSelected(filteredEmails)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
             <hr />
             <table class="table table-hover">
                 <tbody>
-                    <tr ng-click="mailbox.showEmail(message)" ng-repeat="message in filteredMessages = (mailbox.messages | SearchFilter:mailbox.searchText | TypeFilter:mailbox.filter)" ng-class="{unread: !message.is_read}">
-                        <td ng-if="message.is_selected"><input checked type="checkbox"></td>
-                        <td ng-if="!message.is_selected"><input type="checkbox"></td>
-                        <td><i ng-class="{'fa fa-star-o': !message.is_starred, 'fa fa-star': message.is_starred}"></i></td>
-                        <td ng-bind="message.from"></td>
-                        <td ng-bind="message.subject"></td>
-                        <td ng-bind="message.date"></td>
+                    <tr ng-repeat="email in filteredEmails = (mailbox.emails | SearchFilter:mailbox.searchText | TypeFilter:mailbox.filter)" ng-class="{unread: !email.is_read}">
+                        <td ng-if="email.is_selected"><input ng-click="mailbox.selectEmail(email, filteredEmails)" checked type="checkbox"></td>
+                        <td ng-if="!email.is_selected"><input ng-click="mailbox.selectEmail(email, filteredEmails)" type="checkbox"></td>
+                        <td ng-click="mailbox.starEmail(email)"><i ng-class="{'fa fa-star-o': !email.is_starred, 'fa fa-star': email.is_starred}"></i></td>
+                        <td ng-click="mailbox.showEmail(email)" ng-bind="email.from"></td>
+                        <td ng-click="mailbox.showEmail(email)" ng-bind="email.subject"></td>
+                        <td ng-click="mailbox.showEmail(email)" ng-bind="email.date"></td>
                     </tr>
-                    <tr ng-hide="filteredMessages.length">
-                        <td>No messages found.</td>
+                    <tr ng-hide="filteredEmails.length">
+                        <td>No emails found.</td>
                     </tr>
                 </tbody>
             </table>

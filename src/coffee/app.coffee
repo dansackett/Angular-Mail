@@ -8,42 +8,78 @@ angular.module 'angularMail', []
 # MailboxCtrl Controller
 # @ngInject
 ###
-MailboxCtrl = ($scope, MessageService, FilterService, ModeService, EmailActionService) ->
+MailboxCtrl = ($scope, MessageService, FilterService, ModeService, EmailActionService, EmailSelectService) ->
     vm = @
+
+    vm.searchText = ''
 
     vm.mode = ModeService.getMode()
     vm.changeMode = (mode) ->
         ModeService.changeMode(mode)
-        vm.mode = ModeService.getMode(mode)
-        return
-
-    vm.searchText = ''
 
     vm.filter = FilterService.getCurrentFilter()
     vm.filters = FilterService.getFilters()
     vm.applyFilter = (filter) ->
         FilterService.applyFilter(filter)
-        return
 
-    vm.messages = MessageService.getMessages()
-
+    vm.emails = MessageService.getMessages()
     vm.currentEmail = EmailActionService.getCurrentEmail()
     vm.showEmail = (email) ->
         EmailActionService.showEmail(email)
-        return
+
+    vm.starEmail = (email) ->
+        EmailActionService.starEmail(email)
+
+    vm.emailsSelected = EmailSelectService.emailsSelected
+    vm.selectEmails = (type, emails) ->
+        EmailSelectService.selectEmails(type, emails)
+        vm.emailsSelected = EmailSelectService.emailsSelected
+
+    vm.selectEmail = (email, emails) ->
+        EmailSelectService.selectEmail(email, emails)
+        vm.emailsSelected = EmailSelectService.emailsSelected
+
+    vm.unselectEmails = () ->
+        EmailSelectService.unselectEmails()
+        vm.emailsSelected = EmailSelectService.emailsSelected
+
+    vm.starSelected = (emails) ->
+        EmailActionService.starSelected(emails)
+
+    vm.moveToInbox = (emails) ->
+        EmailActionService.moveToInbox(emails)
+
+    vm.unstarSelected = (emails) ->
+        EmailActionService.unstarSelected(emails)
+
+    vm.readSelected = (emails) ->
+        EmailActionService.readSelected(emails)
+
+    vm.unreadSelected = (emails) ->
+        EmailActionService.unreadSelected(emails)
+
+    vm.archiveSelected = (emails) ->
+        EmailActionService.archiveSelected(emails)
+
+    vm.spamSelected = (emails) ->
+        EmailActionService.spamSelected(emails)
+
+    vm.deleteSelected = (emails) ->
+        EmailActionService.deleteSelected(emails)
+
+    $scope.$on 'selectedEmailsUpdated', () ->
+        EmailSelectService.unselectEmails()
+        vm.emailsSelected = EmailSelectService.emailsSelected
 
     $scope.$on 'currentEmailUpdated', () ->
         vm.mode = 'read'
         vm.currentEmail = EmailActionService.getCurrentEmail()
-        return
 
     $scope.$on 'modeUpdated', () ->
         vm.mode = ModeService.getMode()
-        return
 
     $scope.$on 'filterUpdated', () ->
         vm.filter = FilterService.getCurrentFilter()
-        return
 
     return
 
@@ -61,18 +97,15 @@ ViewEmailCtrl = ($scope, ModeService, EmailActionService) ->
     vm.mode = ModeService.getMode()
     vm.changeMode = (mode) ->
         ModeService.changeMode(mode)
-        return
 
     vm.currentEmail = EmailActionService.getCurrentEmail()
 
     $scope.$on 'modeUpdated', () ->
         vm.mode = ModeService.getMode()
-        return
 
     $scope.$on 'currentEmailUpdated', () ->
         vm.mode = 'read'
         vm.currentEmail = EmailActionService.getCurrentEmail()
-        return
 
     return
 
@@ -90,11 +123,9 @@ SendEmailCtrl = ($scope, ModeService) ->
     vm.mode = ModeService.getMode()
     vm.changeMode = (mode) ->
         ModeService.changeMode(mode)
-        return
 
     $scope.$on 'modeUpdated', () ->
         vm.mode = ModeService.getMode()
-        return
 
     return
 
@@ -103,21 +134,100 @@ angular.module('angularMail').controller 'SendEmailCtrl', SendEmailCtrl
 # -----------------------------------------------------------------------------
 
 ###
+# EmailSelectService Factory
+# @ngInject
+###
+EmailSelectService = () ->
+    EmailSelectService = {
+        emailsSelected: false
+        selectEmail: (email, emails) ->
+            email.is_selected = not email.is_selected
+            selected_num = (email for email in emails when email.is_selected).length > 0
+            EmailSelectService.emailsSelected = selected_num
+        unselectEmails: () ->
+            (email.is_selected = false for email in messages)
+            EmailSelectService.emailsSelected = false
+        selectEmails: (type = 'all', emails) ->
+            (email.is_selected = false for email in emails)
+            EmailSelectService.emailsSelected = true
+
+            if type == 'all'
+                (email.is_selected = true for email in emails)
+            else if type == 'read'
+                (email.is_selected = true for email in emails when email.is_read)
+            else if type == 'unread'
+                (email.is_selected = true for email in emails when not email.is_read)
+            else if type == 'starred'
+                (email.is_selected = true for email in emails when email.is_starred)
+            else if type == 'unstarred'
+                (email.is_selected = true for email in emails when not email.is_starred)
+    }
+
+    return EmailSelectService
+
+angular.module('angularMail').factory 'EmailSelectService', EmailSelectService
+
+# -----------------------------------------------------------------------------
+
+###
 # EmailActionsService Factory
 # @ngInject
 ###
 EmailActionService = ($rootScope) ->
-    EmailActionsService = {
+    EmailActionService = {
         currentEmail: null
+        getCurrentEmail: () ->
+            EmailActionService.currentEmail
         showEmail: (email) ->
             EmailActionService.currentEmail = email
+            email.is_read = true
             $rootScope.$broadcast('currentEmailUpdated')
-            return
-        getCurrentEmail: () ->
-            return EmailActionService.currentEmail
+        starEmail: (email) ->
+            email.is_starred = !email.is_starred
+            $rootScope.$broadcast('selectedEmailsUpdated')
+        moveToInbox: (emails) ->
+            angular.forEach emails, (email) ->
+                valid = not email.is_sent and not email.is_draft and email.is_selected
+
+                if valid
+                    email.is_in_inbox = true
+                    email.is_archived = false
+                    email.is_spam = false
+                    email.is_deleted = false
+            $rootScope.$broadcast('selectedEmailsUpdated')
+        starSelected: (emails) ->
+            (email.is_starred = true for email in emails when email.is_selected)
+            $rootScope.$broadcast('selectedEmailsUpdated')
+        unstarSelected: (emails) ->
+            (email.is_starred = false for email in emails when email.is_selected)
+            $rootScope.$broadcast('selectedEmailsUpdated')
+        readSelected: (emails) ->
+            (email.is_read = true for email in emails when email.is_selected)
+            $rootScope.$broadcast('selectedEmailsUpdated')
+        unreadSelected: (emails) ->
+            (email.is_read = false for email in emails when email.is_selected)
+            $rootScope.$broadcast('selectedEmailsUpdated')
+        spamSelected: (emails) ->
+            angular.forEach emails, (email) ->
+                if email.is_selected
+                    email.is_in_inbox = false
+                    email.is_spam = true
+            $rootScope.$broadcast('selectedEmailsUpdated')
+        archiveSelected: (emails) ->
+            angular.forEach emails, (email) ->
+                if email.is_selected
+                    email.is_in_inbox = false
+                    email.is_archived = true
+            $rootScope.$broadcast('selectedEmailsUpdated')
+        deleteSelected: (emails) ->
+            angular.forEach emails, (email) ->
+                if email.is_selected
+                    email.is_in_inbox = false
+                    email.is_deleted = true
+            $rootScope.$broadcast('selectedEmailsUpdated')
     }
 
-    return EmailActionsService
+    return EmailActionService
 
 angular.module('angularMail').factory 'EmailActionService', EmailActionService
 
@@ -131,11 +241,10 @@ ModeService = ($rootScope) ->
     ModeService = {
         mode: 'view'
         getMode: () ->
-            return ModeService.mode
+            ModeService.mode
         changeMode: (mode = 'view') ->
             ModeService.mode = mode
             $rootScope.$broadcast('modeUpdated')
-            return
     }
 
     return ModeService
@@ -151,7 +260,7 @@ angular.module('angularMail').factory 'ModeService', ModeService
 MessageService = () ->
     MessageService = {
         getMessages: () ->
-            return messages
+            messages
     }
 
     return MessageService
@@ -172,7 +281,7 @@ FilterService = ($rootScope) ->
         applyFilter: (filter) ->
             FilterService.currentFilter = filter
             $rootScope.$broadcast('filterUpdated')
-            return FilterService.currentFilter
+            FilterService.currentFilter
     }
 
     return FilterService

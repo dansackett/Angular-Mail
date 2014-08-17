@@ -12,7 +12,7 @@ messages = [
         is_read: true
         is_sent: false
         is_draft: false
-        is_selected: true
+        is_selected: false
         is_spam: false
         is_archived: false
         is_deleted: false

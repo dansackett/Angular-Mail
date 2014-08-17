@@ -81,6 +81,9 @@ MailboxCtrl = ($scope, MessageService, FilterService, ModeService, EmailActionSe
     $scope.$on 'filterUpdated', () ->
         vm.filter = FilterService.getCurrentFilter()
 
+    $scope.$on 'emailCreated', () ->
+        vm.messages = MessageService.getMessages()
+
     return
 
 angular.module('angularMail').controller 'MailboxCtrl', MailboxCtrl
@@ -117,15 +120,25 @@ angular.module('angularMail').controller 'ViewEmailCtrl', ViewEmailCtrl
 # SendEmailCtrl Controller
 # @ngInject
 ###
-SendEmailCtrl = ($scope, ModeService) ->
+SendEmailCtrl = ($scope, ModeService, EmailActionService) ->
     vm = @
 
     vm.mode = ModeService.getMode()
+    vm.from = ''
+    vm.subject = ''
+    vm.date = ''
+    vm.message = ''
     vm.changeMode = (mode) ->
         ModeService.changeMode(mode)
 
+    vm.sendEmail = (from, subject, message, date, is_sent) ->
+        EmailActionService.createEmail(from, subject, message, date, is_sent)
+
     $scope.$on 'modeUpdated', () ->
         vm.mode = ModeService.getMode()
+
+    $scope.$on 'emailCreated', () ->
+        vm.mode = 'view'
 
     return
 
@@ -182,6 +195,24 @@ EmailActionService = ($rootScope) ->
             EmailActionService.currentEmail = email
             email.is_read = true
             $rootScope.$broadcast('currentEmailUpdated')
+        createEmail: (from, subject, message, date, is_sent) ->
+            messages.push {
+                from: from
+                from_email: 'me@angularmail.com'
+                subject: subject
+                message: message
+                date: date
+                is_in_inbox: false
+                is_read: false
+                is_sent: is_sent
+                is_draft: not is_sent
+                is_selected: false
+                is_spam: false
+                is_archived: false
+                is_deleted: false
+                is_starred: false
+            }
+            $rootScope.$broadcast('emailCreated')
         starEmail: (email) ->
             email.is_starred = !email.is_starred
             $rootScope.$broadcast('selectedEmailsUpdated')

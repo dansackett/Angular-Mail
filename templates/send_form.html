@@ -1,44 +1,38 @@
 <div class="row" ng-show="sendEmail.mode == 'compose'" ng-controller="SendEmailCtrl as sendEmail">
     <div class="col-md-12">
-        <form class="form-horizontal" role="form">
+        <form class="form-horizontal" role="form" novalidate>
             <div class="form-group">
                 <label for="to" class="col-sm-2 control-label">To</label>
                 <div class="col-sm-10">
-                    <input type="email" class="form-control" id="to" ng-model="sendMail.to" placeholder="To" value="me@angular-mail.com">
+                    <input type="email" name="to" class="form-control" id="to" ng-model="sendEmail.to" placeholder="To">
                 </div>
             </div>
             <div class="form-group">
-                <label for="from" class="col-sm-2 control-label">From</label>
+                <label class="col-sm-2 control-label">From</label>
                 <div class="col-sm-10">
-                    <p class="form-control-static" id="from">me@angular-mail.com</p>
+                    <p class="form-control-static" name="from" id="from">me@angular-mail.com</p>
                 </div>
             </div>
             <div class="form-group">
                 <label for="subject" class="col-sm-2 control-label">Subject</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="subject" ng-model="sendMail.subject" placeholder="Subject">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="date" class="col-sm-2 control-label">Date</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="date" ng-model="sendMail.date" placeholder="Date">
+                    <input type="text" name="subject" class="form-control" id="subject" ng-model="sendEmail.subject" placeholder="Subject">
                 </div>
             </div>
             <div class="form-group">
                 <label for="message" class="col-sm-2 control-label">Message</label>
                 <div class="col-sm-10">
-                    <textarea id="message" class="form-control" ng-model="sendMail.message" rows="10"></textarea>
+                    <textarea id="message" name="message" class="form-control" ng-model="sendEmail.message" placeholder="Message" rows="10"></textarea>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <div class="pull-left">
-                        <button class="btn btn-primary" ng-click="sendEmail.sendEmail(sendMail.from, sendMail.subject, sendMail.message, sendMail.date, true)"><i class="fa fa-send-o"></i> Send</button>
+                        <button class="btn btn-success" ng-click="sendEmail.sendEmail(true)"><i class="fa fa-send-o"></i> Send</button>
                     </div>
                     <div class="pull-right">
-                        <button class="btn btn-warning" ng-click="sendEmail.sendEmail(sendMail.from, sendMail.subject, sendMail.message, sendMail.date, false)"><i class="fa fa-save"></i> Save Draft</button>
-                        <button class="btn btn-danger" ng-click="sendEmail.changeMode()"><i class="fa fa-trash-o"></i> Delete</button>
+                        <button class="btn btn-primary" ng-click="sendEmail.sendEmail(false)"><i class="fa fa-save"></i> Save Draft</button>
+                        <button class="btn btn-danger" ng-click="sendEmail.changeMode('view')"><i class="fa fa-trash-o"></i> Delete</button>
                     </div>
                 </div>
             </div>

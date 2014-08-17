@@ -37,13 +37,13 @@
                     <li><a ng-click="mailbox.selectEmails('unstarred', filteredEmails)" href="#">Unstarred</a></li>
                 </ul>
             </div>
-            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.moveToInbox(filteredEmails)" class="btn btn-default">Move To Inbox</button>
-            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.readSelected(filteredEmails)" class="btn btn-default">Mark As Read</button>
-            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.unreadSelected(filteredEmails)" class="btn btn-default">Mark As Unread</button>
-            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.starSelected(filteredEmails)" class="btn btn-default"><i class="fa fa-star"></i> Star</button>
-            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.unstarSelected(filteredEmails)" class="btn btn-default"><i class="fa fa-star-o"></i> Unstar</button>
-            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.spamSelected(filteredEmails)" class="btn btn-default">Mark As Spam</button>
-            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.archiveSelected(filteredEmails)" class="btn btn-warning"><i class="fa fa-archive"></i> Archive</button>
+            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.moveToInbox(filteredEmails)" class="btn">Move To Inbox</button>
+            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.readSelected(filteredEmails)" class="btn">Mark As Read</button>
+            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.unreadSelected(filteredEmails)" class="btn">Mark As Unread</button>
+            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.starSelected(filteredEmails)" class="btn"><i class="fa fa-star"></i> Star</button>
+            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.unstarSelected(filteredEmails)" class="btn"><i class="fa fa-star-o"></i> Unstar</button>
+            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.spamSelected(filteredEmails)" class="btn">Mark As Spam</button>
+            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.archiveSelected(filteredEmails)" class="btn"><i class="fa fa-archive"></i> Archive</button>
             <button ng-show="mailbox.emailsSelected" ng-click="mailbox.deleteSelected(filteredEmails)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
             <hr />
             <table class="table table-hover">
@@ -52,9 +52,12 @@
                         <td ng-if="email.is_selected"><input ng-click="mailbox.selectEmail(email, filteredEmails)" checked type="checkbox"></td>
                         <td ng-if="!email.is_selected"><input ng-click="mailbox.selectEmail(email, filteredEmails)" type="checkbox"></td>
                         <td ng-click="mailbox.starEmail(email)"><i ng-class="{'fa fa-star-o': !email.is_starred, 'fa fa-star': email.is_starred}"></i></td>
-                        <td ng-click="mailbox.showEmail(email)" ng-bind="email.from"></td>
-                        <td ng-click="mailbox.showEmail(email)" ng-bind="email.subject"></td>
-                        <td ng-click="mailbox.showEmail(email)" ng-bind="email.date"></td>
+                        <td ng-show="email.is_draft" ng-click="mailbox.editDraft(email)" ng-bind="email.from"></td>
+                        <td ng-hide="email.is_draft" ng-click="mailbox.showEmail(email)" ng-bind="email.from"></td>
+                        <td ng-show="email.is_draft" ng-click="mailbox.editDraft(email)" ng-bind="email.subject"></td>
+                        <td ng-hide="email.is_draft" ng-click="mailbox.showEmail(email)" ng-bind="email.subject"></td>
+                        <td ng-show="email.is_draft" ng-click="mailbox.editDraft(email)" ng-bind="email.date"></td>
+                        <td ng-hide="email.is_draft" ng-click="mailbox.showEmail(email)" ng-bind="email.date"></td>
                     </tr>
                     <tr ng-hide="filteredEmails.length">
                         <td>No emails found.</td>

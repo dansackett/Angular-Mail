@@ -13,9 +13,12 @@ third_party:
         - public/third-party/jquery/dist/jquery.min.js
         - public/third-party/bootstrap/dist/js/bootstrap.min.js
         - public/third-party/angular/angular.min.js
+        - public/third-party/Bootflat/js/site.min.js
+        - public/third-party/moment/min/moment.min.js
     css:
         - public/third-party/bootstrap/dist/css/bootstrap.min.css
         - public/third-party/fontawesome/css/font-awesome.min.css
+        - public/third-party/Bootflat/css/site.min.css
     fonts:
         - public/third-party/bootstrap/dist/fonts/glyphicons-halflings-regular.eot
         - public/third-party/bootstrap/dist/fonts/glyphicons-halflings-regular.svg

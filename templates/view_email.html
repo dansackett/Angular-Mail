@@ -1,9 +1,12 @@
-<div class="col-md-12" ng-show="viewEmail.mode == 'read'" ng-controller="ViewEmailCtrl as viewEmail">
-    <h1 ng-bind="viewEmail.currentEmail.subject"></h1>
-    <hr />
-    From: <strong>{{ viewEmail.currentEmail.from }}</strong> ({{ viewEmail.currentEmail.from_email }})
-    <hr />
-    <p ng-bind="viewEmail.currentEmail.message"></p>
-    <hr />
-    <button ng-click="viewEmail.changeMode('view')" class="btn btn-primary">Back to Inbox</button>
+<div class="row" ng-controller="ViewEmailCtrl as viewEmail" ng-show="viewEmail.mode == 'read'">
+    <div class="col-md-12">
+        <h1 ng-bind="viewEmail.currentEmail.subject"></h1>
+        <hr />
+        <strong>To:</strong> {{ viewEmail.currentEmail.to_email }}<br />
+        <strong>From:</strong> {{ viewEmail.currentEmail.from }} <em><{{ viewEmail.currentEmail.from_email }}></em>
+        <hr />
+        <p ng-bind="viewEmail.currentEmail.message"></p>
+        <hr />
+        <button ng-click="viewEmail.changeMode('view')" class="btn btn-primary">Back to Inbox</button>
+    </div>
 </div>

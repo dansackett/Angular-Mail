@@ -37,7 +37,7 @@ filters = [
 
 messages = [
   {
-    id: 1,
+    id: 9,
     from: 'Dan Sackett',
     to_email: 'me@angular-mail.com',
     from_email: 'danesackett@gmail.com',
@@ -54,7 +54,7 @@ messages = [
     is_deleted: false,
     is_starred: true
   }, {
-    id: 2,
+    id: 8,
     from: 'Tony Hawk',
     to_email: 'me@angular-mail.com',
     from_email: 'tonyhawk@gmail.com',
@@ -71,7 +71,7 @@ messages = [
     is_deleted: false,
     is_starred: false
   }, {
-    id: 3,
+    id: 7,
     from: 'Bill Simmons',
     to_email: 'me@angular-mail.com',
     from_email: 'billsimmons@gmail.com',
@@ -88,7 +88,7 @@ messages = [
     is_deleted: false,
     is_starred: false
   }, {
-    id: 4,
+    id: 6,
     from: 'Dikembe Mutumbo',
     to_email: 'me@angular-mail.com',
     from_email: 'mountmutumbo@gmail.com',
@@ -122,7 +122,7 @@ messages = [
     is_deleted: false,
     is_starred: false
   }, {
-    id: 6,
+    id: 4,
     from: 'Father Time',
     to_email: 'me@angular-mail.com',
     from_email: 'fathertime@gmail.com',
@@ -139,7 +139,7 @@ messages = [
     is_deleted: false,
     is_starred: false
   }, {
-    id: 7,
+    id: 3,
     from: 'Junk',
     to_email: 'me@angular-mail.com',
     from_email: 'no-reply@gmail.com',
@@ -156,7 +156,7 @@ messages = [
     is_deleted: true,
     is_starred: false
   }, {
-    id: 8,
+    id: 2,
     from: 'Dan Sackett',
     to_email: 'me@angular-mail.com',
     from_email: 'danesackett@gmail.com',
@@ -173,7 +173,7 @@ messages = [
     is_deleted: false,
     is_starred: false
   }, {
-    id: 9,
+    id: 1,
     from: 'Dan Sackett',
     to_email: 'me@angular-mail.com',
     from_email: 'danesackett@gmail.com',

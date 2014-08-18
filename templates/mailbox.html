@@ -14,7 +14,7 @@
 
     <div class="row">
         <div class="col-md-2">
-            <button class="btn btn-primary btn-block" ng-click="mailbox.changeMode('compose')">Compose</button>
+            <button class="btn btn-danger btn-block" ng-click="mailbox.changeMode('compose')">Compose</button>
             <hr />
             <div class="list-group">
                 <a href="javascript:;" ng-click="mailbox.applyFilter(filter.name)" ng-repeat="filter in mailbox.filters" ng-class="{'list-group-item active': filter.name == mailbox.filter, 'list-group-item': filter.name !== mailbox.filter}">
@@ -24,9 +24,9 @@
         </div>
         <div class="col-md-10">
             <div class="btn-group">
-                <button ng-hide="mailbox.emailsSelected" ng-click="mailbox.selectEmails('all', filteredEmails)" type="button" class="btn btn-default">Select All</button>
-                <button ng-show="mailbox.emailsSelected" ng-click="mailbox.unselectEmails()" type="button" class="btn btn-default">Unselect All</button>
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <button ng-hide="mailbox.emailsSelected" ng-click="mailbox.selectEmails('all', filteredEmails)" type="button" class="btn btn-danger">Select All</button>
+                <button ng-show="mailbox.emailsSelected" ng-click="mailbox.unselectEmails()" type="button" class="btn btn-danger">Unselect All</button>
+                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
@@ -37,13 +37,13 @@
                     <li><a ng-click="mailbox.selectEmails('unstarred', filteredEmails)" href="#">Unstarred</a></li>
                 </ul>
             </div>
-            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.moveToInbox(filteredEmails)" class="btn">Move To Inbox</button>
-            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.readSelected(filteredEmails)" class="btn">Mark As Read</button>
-            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.unreadSelected(filteredEmails)" class="btn">Mark As Unread</button>
-            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.starSelected(filteredEmails)" class="btn"><i class="fa fa-star"></i> Star</button>
-            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.unstarSelected(filteredEmails)" class="btn"><i class="fa fa-star-o"></i> Unstar</button>
-            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.spamSelected(filteredEmails)" class="btn">Mark As Spam</button>
-            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.archiveSelected(filteredEmails)" class="btn"><i class="fa fa-archive"></i> Archive</button>
+            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.moveToInbox(filteredEmails)" class="btn btn-danger">Move To Inbox</button>
+            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.readSelected(filteredEmails)" class="btn btn-danger">Mark As Read</button>
+            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.unreadSelected(filteredEmails)" class="btn btn-danger">Mark As Unread</button>
+            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.starSelected(filteredEmails)" class="btn btn-danger"><i class="fa fa-star"></i> Star</button>
+            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.unstarSelected(filteredEmails)" class="btn btn-danger"><i class="fa fa-star-o"></i> Unstar</button>
+            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.spamSelected(filteredEmails)" class="btn btn-danger">Mark As Spam</button>
+            <button ng-show="mailbox.emailsSelected" ng-click="mailbox.archiveSelected(filteredEmails)" class="btn btn-danger"><i class="fa fa-archive"></i> Archive</button>
             <button ng-show="mailbox.emailsSelected" ng-click="mailbox.deleteSelected(filteredEmails)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
             <hr />
             <table class="table table-hover">

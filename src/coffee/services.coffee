@@ -55,7 +55,7 @@ angular.module('angularMail').factory 'EmailSelectService', EmailSelectService
 # EmailActionsService Factory
 # @ngInject
 ###
-EmailActionService = ($rootScope, MessageService) ->
+EmailActionService = ($rootScope, MessageService, AlertService) ->
     # Get the currently selected email
     getCurrentEmail = () ->
         service.currentEmail
@@ -87,6 +87,11 @@ EmailActionService = ($rootScope, MessageService) ->
             email.is_sent = is_sent
             email.is_draft = not is_sent
 
+            if email.is_draft
+                AlertService.createAlert 'Email Draft Saved', 'success'
+            else
+                AlertService.createAlert 'Email Sent', 'success'
+
             MessageService.moveEmailToFront email
         else
             email = {
@@ -108,6 +113,11 @@ EmailActionService = ($rootScope, MessageService) ->
                 is_starred: false
             }
 
+            if email.is_draft
+                AlertService.createAlert 'Email Draft Saved', 'success'
+            else
+                AlertService.createAlert 'Email Sent', 'success'
+
             MessageService.addMessage email
 
         $rootScope.$broadcast 'emailCreated'
@@ -120,6 +130,12 @@ EmailActionService = ($rootScope, MessageService) ->
     # Star/Unstar an Email
     starEmail = (email) ->
         email.is_starred = !email.is_starred
+
+        if email.is_starred
+            AlertService.createAlert 'Email Starred', 'success'
+        else
+            AlertService.createAlert 'Email Unstarred', 'success'
+
         $rootScope.$broadcast 'selectedEmailsUpdated'
 
     # Move and email to the inbox
@@ -138,21 +154,25 @@ EmailActionService = ($rootScope, MessageService) ->
     # Star Selected Emails
     starSelected = (emails) ->
         (email.is_starred = true for email in emails when email.is_selected)
+        AlertService.createAlert 'Emails Starred', 'success'
         $rootScope.$broadcast 'selectedEmailsUpdated'
 
     # Unstar Selected Emails
     unstarSelected = (emails) ->
         (email.is_starred = false for email in emails when email.is_selected)
+        AlertService.createAlert 'Emails Unstarred', 'success'
         $rootScope.$broadcast 'selectedEmailsUpdated'
 
     # Mark Selected Emails as Read
     readSelected = (emails) ->
         (email.is_read = true for email in emails when email.is_selected)
+        AlertService.createAlert 'Emails Marked as Read', 'success'
         $rootScope.$broadcast 'selectedEmailsUpdated'
 
     # Mark Selected Emails as Unread
     unreadSelected = (emails) ->
         (email.is_read = false for email in emails when email.is_selected)
+        AlertService.createAlert 'Emails Marked as Unread', 'success'
         $rootScope.$broadcast 'selectedEmailsUpdated'
 
     # Mark Selected Emails as Spam
@@ -162,6 +182,7 @@ EmailActionService = ($rootScope, MessageService) ->
                 email.is_in_inbox = false
                 email.is_spam = true
 
+        AlertService.createAlert 'Emails Marked as Spam', 'success'
         $rootScope.$broadcast 'selectedEmailsUpdated'
 
     # Mark Selected Emails as Archived
@@ -171,6 +192,7 @@ EmailActionService = ($rootScope, MessageService) ->
                 email.is_in_inbox = false
                 email.is_archived = true
 
+        AlertService.createAlert 'Emails Archived', 'success'
         $rootScope.$broadcast 'selectedEmailsUpdated'
 
 
@@ -181,6 +203,7 @@ EmailActionService = ($rootScope, MessageService) ->
                 email.is_in_inbox = false
                 email.is_deleted = true
 
+        AlertService.createAlert 'Emails Deleted', 'success'
         $rootScope.$broadcast 'selectedEmailsUpdated'
 
     service = {
@@ -289,3 +312,35 @@ FilterService = ($rootScope) ->
     return service
 
 angular.module('angularMail').factory 'FilterService', FilterService
+
+# -----------------------------------------------------------------------------
+
+###
+# AlertService Factory
+# @ngInject
+###
+AlertService = ($rootScope) ->
+    # Create a new Alert
+    createAlert = (message, type) ->
+        service.message = message
+        service.type = type
+        $rootScope.$broadcast 'alertUpdated'
+
+    # Create a new Alert
+    clearAlert = () ->
+        service.message = ''
+        service.type = ''
+        $rootScope.$broadcast 'alertUpdated'
+
+    service = {
+        message: ''
+        type: ''
+        getMessage: () -> service.message
+        getType: () -> service.type
+        createAlert: createAlert
+        clearAlert: clearAlert
+    }
+
+    return service
+
+angular.module('angularMail').factory 'AlertService', AlertService

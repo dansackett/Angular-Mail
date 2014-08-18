@@ -164,3 +164,26 @@ SendEmailCtrl = ($scope, ModeService, EmailActionService) ->
     return
 
 angular.module('angularMail').controller 'SendEmailCtrl', SendEmailCtrl
+
+# -----------------------------------------------------------------------------
+
+###
+# Alert Controller
+# @ngInject
+###
+AlertCtrl = ($scope, AlertService) ->
+    vm = @
+
+    vm.message = AlertService.getMessage()
+    vm.type = AlertService.getType()
+
+    vm.clearAlert = () ->
+        AlertService.clearAlert()
+
+    $scope.$on 'alertUpdated', () ->
+        vm.message = AlertService.getMessage()
+        vm.type = AlertService.getType()
+
+    return
+
+angular.module('angularMail').controller 'ViewEmailCtrl', ViewEmailCtrl

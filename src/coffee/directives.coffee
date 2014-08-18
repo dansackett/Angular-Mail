@@ -5,6 +5,24 @@
 # -----------------------------------------------------------------------------
 
 ###
+# Alert Directive
+# @ngInject
+###
+Alert = () ->
+    directive = {
+        restrict: 'E'
+        scope: {}
+        link: (scope, elem, attrs) ->
+        templateUrl: 'templates/alerts.html'
+    }
+
+    return directive
+
+angular.module('angularMail').directive 'alert', Alert
+
+# -----------------------------------------------------------------------------
+
+###
 # MailBox Directive
 # @ngInject
 ###

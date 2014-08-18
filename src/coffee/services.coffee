@@ -224,7 +224,7 @@ angular.module('angularMail').factory 'ModeService', ModeService
 MessageService = () ->
     # Add a new email message
     addMessage = (email) ->
-        messages.push email
+        messages.unshift email
 
     service = {
         getMessages: () -> messages

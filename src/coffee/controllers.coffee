@@ -143,7 +143,20 @@ SendEmailCtrl = ($scope, ModeService, EmailActionService) ->
         ModeService.changeMode(mode)
 
     vm.sendEmail = (is_sent) ->
-        EmailActionService.createEmail(vm.to, vm.subject, vm.message, moment().format('MMMM Do YYYY'), is_sent)
+        email = EmailActionService.currentEmail
+
+        if email.is_draft
+            email.to_email = vm.to
+            email.subject = vm.subject
+            email.message = vm.message
+            email.date = moment().format('MMMM Do YYYY')
+            email.is_draft = not is_sent
+            email.is_sent = is_sent
+            email.is_in_inbox = is_sent
+            email.is_read = not is_sent
+        else
+            EmailActionService.createEmail(vm.to, vm.subject, vm.message, moment().format('MMMM Do YYYY'), is_sent)
+
         ModeService.changeMode 'view'
         vm.to = 'me@angular-mail.com'
         vm.subject = ''

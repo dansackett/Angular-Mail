@@ -1,5 +1,4 @@
 Todo
 ====
 
-* Reply thread
-* Validate email form
+- [] Reply thread

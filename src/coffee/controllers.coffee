@@ -130,7 +130,7 @@ angular.module('angularMail').controller 'ViewEmailCtrl', ViewEmailCtrl
 # SendEmailCtrl Controller
 # @ngInject
 ###
-SendEmailCtrl = ($scope, ModeService, EmailActionService) ->
+SendEmailCtrl = ($scope, ModeService, EmailActionService, AlertService) ->
     vm = @
 
     vm.to = 'me@angular-mail.com'
@@ -144,6 +144,11 @@ SendEmailCtrl = ($scope, ModeService, EmailActionService) ->
 
     vm.sendEmail = (is_sent) ->
         email = EmailActionService.currentEmail
+
+        if not vm.to or not vm.subject or not vm.message
+            AlertService.createAlert 'Please fill out all of the fields', 'danger'
+            return
+
         EmailActionService.saveEmail(vm.to, vm.subject, vm.message, moment().format('MMMM Do YYYY'), is_sent)
 
         # Reset values

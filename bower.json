@@ -19,6 +19,7 @@
     "fontawesome": "~4.1.0",
     "angular": "~1.2.19",
     "Bootflat": "~2.0.3",
-    "moment": "~2.8.1"
+    "moment": "~2.8.1",
+    "ngstorage": "~0.3.0"
   }
 }

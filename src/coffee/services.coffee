@@ -8,7 +8,12 @@
 # EmailSelectService Factory
 # @ngInject
 ###
-EmailSelectService = () ->
+EmailSelectService = (MessageService) ->
+    # Set if emails are selected
+    emailsSelected = () ->
+        selected_num = (email for email in MessageService.getMessages() when email.is_selected).length > 0
+        service.emailsSelected = selected_num
+
     # Select a single Email
     selectEmail = (email, emails) ->
         email.is_selected = not email.is_selected
@@ -17,7 +22,7 @@ EmailSelectService = () ->
 
     # Unselect all emails
     unselectEmails = () ->
-        (email.is_selected = false for email in messages)
+        (email.is_selected = false for email in MessageService.getMessages())
         service.emailsSelected = false
 
     # Select emails based on a type filter
@@ -36,9 +41,13 @@ EmailSelectService = () ->
         else if type == 'unstarred'
             (email.is_selected = true for email in emails when not email.is_starred)
 
+        MessageService.updateMessages(emails)
+
+        return
+
     # Create service
     service = {
-        emailsSelected: false
+        emailsSelected: emailsSelected
         selectEmail: selectEmail
         unselectEmails: unselectEmails
         selectEmails: selectEmails
@@ -259,28 +268,41 @@ angular.module('angularMail').factory 'ModeService', ModeService
 # MessageService Factory
 # @ngInject
 ###
-MessageService = () ->
+MessageService = ($rootScope, $localStorage) ->
+    # Get Messages
+    getMessages = () ->
+        if not $localStorage.messages
+            $localStorage.messages = service.messages
+
+        return $localStorage.messages
+
     # Add a new email message
     addMessage = (email) ->
-        messages.unshift email
+        $localStorage.messages.unshift email
+
+    # Update messages
+    updateMessages = (emails) ->
+        $localStorage.messages = emails
+        $rootScope.$broadcast 'messagesUpdated'
 
     # Move an email out of the stack to the front
     moveEmailToFront = (email) ->
-        messages.sort (a,b) ->
+        $localStorage.messages.sort (a,b) ->
             if a.id < b.id
-             return 1
+                return 1
             if a.id > b.id
                 return -1
-
             return 0
 
     # Get the next ID
     nextId = () ->
-        return messages.length + 1
+        return $localStorage.messages.length + 1
 
     service = {
-        getMessages: () -> messages
+        messages: messages
+        getMessages: getMessages
         addMessage: addMessage
+        updateMessages: updateMessages
         moveEmailToFront: moveEmailToFront
         nextId: nextId
     }

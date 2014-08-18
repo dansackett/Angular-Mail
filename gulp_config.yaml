@@ -15,6 +15,7 @@ third_party:
         - public/third-party/angular/angular.min.js
         - public/third-party/Bootflat/js/site.min.js
         - public/third-party/moment/min/moment.min.js
+        - public/third-party/ngstorage/ngStorage.min.js
     css:
         - public/third-party/bootstrap/dist/css/bootstrap.min.css
         - public/third-party/fontawesome/css/font-awesome.min.css

@@ -30,7 +30,7 @@ MailboxCtrl = ($scope, MessageService, FilterService, ModeService, EmailActionSe
     vm.starEmail = (email) ->
         EmailActionService.starEmail(email)
 
-    vm.emailsSelected = EmailSelectService.emailsSelected
+    vm.emailsSelected = EmailSelectService.emailsSelected()
     vm.selectEmails = (type, emails) ->
         EmailSelectService.selectEmails(type, emails)
         vm.emailsSelected = EmailSelectService.emailsSelected
@@ -92,6 +92,9 @@ MailboxCtrl = ($scope, MessageService, FilterService, ModeService, EmailActionSe
         vm.filter = FilterService.getCurrentFilter()
 
     $scope.$on 'emailCreated', () ->
+        vm.messages = MessageService.getMessages()
+
+    $scope.$on 'messagesUpdated', () ->
         vm.messages = MessageService.getMessages()
 
     return

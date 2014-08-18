@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'angularMail', []
+angular.module 'angularMail', ['ngStorage']
 
 #= require config.coffee
 #= require services.coffee

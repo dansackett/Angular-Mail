@@ -72,28 +72,43 @@ EmailActionService = ($rootScope, MessageService) ->
         $rootScope.$broadcast 'readingEmail'
 
     # Create a new email
-    createEmail = (to, subject, message, date, is_sent) ->
+    saveEmail = (to, subject, message, date, is_sent) ->
         in_inbox = to is 'me@angular-mail.com' and is_sent
 
-        message = {
-            from: 'Angular-Mail'
-            from_email: 'me@angular-mail.com'
-            subject: subject
-            to: to
-            message: message
-            date: date
-            is_in_inbox: in_inbox
-            is_read: not in_inbox
-            is_sent: is_sent
-            is_draft: not is_sent
-            is_selected: false
-            is_spam: false
-            is_archived: false
-            is_deleted: false
-            is_starred: false
-        }
+        email = getCurrentEmail()
 
-        MessageService.addMessage message
+        if email and email.is_draft
+            email.to_email = to
+            email.subject = subject
+            email.message = message
+            email.date = date
+            email.is_in_inbox = in_inbox
+            email.is_read = not in_inbox
+            email.is_sent = is_sent
+            email.is_draft = not is_sent
+
+            MessageService.moveEmailToFront email
+        else
+            email = {
+                id: MessageService.nextId()
+                from: 'Angular-Mail'
+                from_email: 'me@angular-mail.com'
+                subject: subject
+                to_email: to
+                message: message
+                date: date
+                is_in_inbox: in_inbox
+                is_read: not in_inbox
+                is_sent: is_sent
+                is_draft: not is_sent
+                is_selected: false
+                is_spam: false
+                is_archived: false
+                is_deleted: false
+                is_starred: false
+            }
+
+            MessageService.addMessage email
 
         $rootScope.$broadcast 'emailCreated'
 
@@ -172,7 +187,7 @@ EmailActionService = ($rootScope, MessageService) ->
         currentEmail: null
         getCurrentEmail: getCurrentEmail
         showEmail: showEmail
-        createEmail: createEmail
+        saveEmail: saveEmail
         editDraft: editDraft
         starEmail: starEmail
         moveToInbox: moveToInbox
@@ -226,9 +241,25 @@ MessageService = () ->
     addMessage = (email) ->
         messages.unshift email
 
+    # Move an email out of the stack to the front
+    moveEmailToFront = (email) ->
+        messages.sort (a,b) ->
+            if a.id < b.id
+             return 1
+            if a.id > b.id
+                return -1
+
+            return 0
+
+    # Get the next ID
+    nextId = () ->
+        return messages.length + 1
+
     service = {
         getMessages: () -> messages
         addMessage: addMessage
+        moveEmailToFront: moveEmailToFront
+        nextId: nextId
     }
 
     return service

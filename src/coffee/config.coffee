@@ -1,8 +1,21 @@
-# Base Configuration For Application
+### Base Configuration For Application ###
 
-# Email Messages
+### Filters ###
+filters = [
+    { name: 'inbox', text: 'Inbox'}
+    { name: 'all', text: 'All Mail'}
+    { name: 'sent', text: 'Sent'}
+    { name: 'draft', text: 'Draft'}
+    { name: 'starred', text: 'Starred'}
+    { name: 'spam', text: 'Spam'}
+    { name: 'archived', text: 'Archived'}
+    { name: 'deleted', text: 'Deleted'}
+]
+
+### Email Messages ###
 messages = [
     {
+        id: 1
         from: 'Dan Sackett'
         to_email: 'me@angular-mail.com'
         from_email: 'danesackett@gmail.com'
@@ -20,6 +33,7 @@ messages = [
         is_starred: true
     }
     {
+        id: 2
         from: 'Tony Hawk'
         to_email: 'me@angular-mail.com'
         from_email: 'tonyhawk@gmail.com'
@@ -37,6 +51,7 @@ messages = [
         is_starred: false
     }
     {
+        id: 3
         from: 'Bill Simmons'
         to_email: 'me@angular-mail.com'
         from_email: 'billsimmons@gmail.com'
@@ -54,6 +69,7 @@ messages = [
         is_starred: false
     }
     {
+        id: 4
         from: 'Dikembe Mutumbo'
         to_email: 'me@angular-mail.com'
         from_email: 'mountmutumbo@gmail.com'
@@ -71,6 +87,7 @@ messages = [
         is_starred: false
     }
     {
+        id: 5
         from: 'Jimmy Buffet'
         to_email: 'me@angular-mail.com'
         from_email: 'margaritaville@gmail.com'
@@ -88,6 +105,7 @@ messages = [
         is_starred: false
     }
     {
+        id: 6
         from: 'Father Time'
         to_email: 'me@angular-mail.com'
         from_email: 'fathertime@gmail.com'
@@ -105,6 +123,7 @@ messages = [
         is_starred: false
     }
     {
+        id: 7
         from: 'Junk'
         to_email: 'me@angular-mail.com'
         from_email: 'no-reply@gmail.com'
@@ -122,6 +141,7 @@ messages = [
         is_starred: false
     }
     {
+        id: 8
         from: 'Dan Sackett'
         to_email: 'me@angular-mail.com'
         from_email: 'danesackett@gmail.com'
@@ -139,6 +159,7 @@ messages = [
         is_starred: false
     }
     {
+        id: 9
         from: 'Dan Sackett'
         to_email: 'me@angular-mail.com'
         from_email: 'danesackett@gmail.com'
@@ -155,16 +176,4 @@ messages = [
         is_deleted: false
         is_starred: false
     }
-]
-
-# Filters
-filters = [
-    { name: 'inbox', text: 'Inbox'}
-    { name: 'all', text: 'All Mail'}
-    { name: 'sent', text: 'Sent'}
-    { name: 'draft', text: 'Draft'}
-    { name: 'starred', text: 'Starred'}
-    { name: 'spam', text: 'Spam'}
-    { name: 'archived', text: 'Archived'}
-    { name: 'deleted', text: 'Deleted'}
 ]

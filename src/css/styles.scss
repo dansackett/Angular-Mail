@@ -9,14 +9,90 @@
 @import "inc/vars",
         "inc/normalize";
 
-.table>tbody>tr:first-child>td {
-    border-top: none;
+body {
+    background-color: #434A54;
+    color: #E6E9ED;
 }
 
-.table tr.unread {
-    font-weight: 700;
+hr {
+    border-top: 1px solid #656D78;
 }
 
-.table tr:hover {
-    cursor: pointer;
+.page-header {
+    border-bottom: 1px solid #656D78;
+
+    h1 {
+        color: #FFF;
+        font-size: 36px;
+
+        small {
+            color: #E6E9ED;
+        }
+    }
+}
+
+.table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {
+    background-color: #656D78;
+}
+
+.table {
+    &>tbody {
+        &>tr {
+            &:first-child {
+                &>td {
+                    border-top: none;
+                }
+            }
+
+            &:hover {
+                cursor: pointer;
+            }
+
+            &.unread {
+                font-weight: 700;
+            }
+
+            td {
+                border-top: 1px solid #656D78;
+            }
+        }
+    }
+}
+
+a {
+    &.list-group-item {
+        color: #FFF;
+
+        &.active {
+            background-color: #DA4453;
+            border-color: #434A54;
+
+            &:focus, &:hover {
+                background-color: #DA4453;
+                border-color: #434A54;
+            }
+        }
+    }
+}
+
+.list-group-item-heading {
+    color: #FFF;
+}
+
+.list-group-item {
+    background-color: #656D78;
+    border: 1px solid #434A54;
+    display: block;
+    margin-bottom: -1px;
+    padding: 10px 15px;
+    position: relative;
+}
+
+.form-control {
+    background: #656D78;
+    border: none;
+}
+
+::placeholder {
+    color: #FFF;
 }

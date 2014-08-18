@@ -271,6 +271,7 @@ angular.module('angularMail').factory 'ModeService', ModeService
 MessageService = ($rootScope, $localStorage) ->
     # Get Messages
     getMessages = () ->
+        # delete $localStorage.messages
         if not $localStorage.messages
             $localStorage.messages = service.messages
 

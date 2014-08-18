@@ -5,6 +5,8 @@ Angular-Mail is an fake email application based on GMail built with AngularJS.
 It is a test to see what I can do with AngularJS and to get me up to speed on
 building a full application.
 
+View the working demo at [http://dansackett.github.io/Angular-Mail/](http://dansackett.github.io/Angular-Mail/)
+
 Getting Setup
 =============
 
